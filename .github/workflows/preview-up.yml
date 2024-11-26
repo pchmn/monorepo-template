@@ -1,0 +1,53 @@
+name: Deploy Preview
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: 🐳 Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🐳 Build Docker Image
+        uses: ./.github/actions/build-docker
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          context: .
+          file: ./apps/web/.docker/Dockerfile
+          tags: pchmn/monorepo-template-web:${{ github.sha}}
+          push: true
+
+  deploy:
+    name: 🚀 Deploy to Dokploy
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🚀 Deploy to Dokploy
+        uses: ./.github/actions/dokploy
+        with:
+          comment-pr: true
+          dokploy-base-url: ${{ secrets.DOKPLOY_BASE_URL }}
+          dokploy-token: ${{ secrets.DOKPLOY_TOKEN }}
+          project-id: 0_G71Uh8nHwvaHXw0eqew
+          application-name: pr-${{ github.event.number }}
+          docker-image: pchmn/monorepo-template-web:${{ github.sha }}
+          docker-port: 8080
+          env: |
+            TEST_ENV=true

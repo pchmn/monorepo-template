@@ -1,11 +1,15 @@
 {
-  "name": "web",
+  "name": "@monorepo-template/web",
   "private": true,
   "type": "module",
+  "files": [
+    "build",
+    "public/locales"
+  ],
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev --host",
-    "start": "react-router-serve ./build/server/index.js",
+    "start": "PORT=8080 react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc --build --noEmit"
   },
   "dependencies": {
