@@ -2,9 +2,9 @@ import {
   Outlet,
   ScrollRestoration,
   createRootRoute,
-} from '@tanstack/react-router'
-import { Meta, Scripts } from '@tanstack/start'
-import type { ReactNode } from 'react'
+} from '@tanstack/react-router';
+import { Meta, Scripts } from '@tanstack/start';
+import type { ReactNode } from 'react';
 
 export const Route = createRootRoute({
   head: () => ({
@@ -22,19 +22,19 @@ export const Route = createRootRoute({
     ],
   }),
   component: RootComponent,
-})
+});
 
 function RootComponent() {
   return (
     <RootDocument>
       <Outlet />
     </RootDocument>
-  )
+  );
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
         <Meta />
       </head>
@@ -44,5 +44,5 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <Scripts />
       </body>
     </html>
-  )
+  );
 }

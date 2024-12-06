@@ -14,12 +14,15 @@
     "typecheck": "react-router typegen && tsc --build --noEmit"
   },
   "dependencies": {
+    "@monorepo-template/ui": "workspace:*",
+    "@react-router/fs-routes": "^7.0.2",
     "@react-router/node": "^7.0.1",
     "@react-router/serve": "^7.0.1",
     "isbot": "^5.1.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router": "^7.0.1"
+    "react-router": "^7.0.1",
+    "remix-themes": "^1.5.1"
   },
   "devDependencies": {
     "@monorepo-template/tsconfig": "workspace:*",

@@ -1,20 +1,20 @@
-import * as core from "@actions/core";
-import * as github from "@actions/github";
-import { getConfig } from "./config";
-import { setPullRequestComment } from "./github/comment-pr";
+import * as core from '@actions/core';
+import * as github from '@actions/github';
+import { getConfig } from './config';
+import { setPullRequestComment } from './github/comment-pr';
 import {
   getApplication,
   getApplicationUrl,
   getOrCreateApplication,
   waitForDeploymentToBeDone,
-} from "./helpers/dokploy.helper";
+} from './helpers/dokploy.helper';
 import {
   applicationDelete,
   applicationDeploy,
   applicationSaveDockerProvider,
   applicationSaveEnvironment,
   client,
-} from "./sdk/client";
+} from './sdk/client';
 
 const config = getConfig();
 let octokit: ReturnType<typeof github.getOctokit>;
@@ -30,7 +30,7 @@ client.setConfig({
 
 async function main() {
   try {
-    if (config.action === "deploy") {
+    if (config.action === 'deploy') {
       await deploy();
     } else {
       await destroy();
@@ -65,22 +65,22 @@ async function deploy() {
     await applicationSaveEnvironment({
       body: {
         applicationId: application.applicationId,
-        env: config.env.join("\n"),
+        env: config.env.join('\n'),
       },
     });
 
     core.info(`Deploying ${application.name}...`);
     await applicationDeploy({
-      parseAs: "text",
+      parseAs: 'text',
       body: { applicationId: application.applicationId },
     });
 
-    core.debug("Waiting for deployment to be done...");
+    core.debug('Waiting for deployment to be done...');
     await waitForDeploymentToBeDone(application.applicationId);
 
     const applicationUrl = await getApplicationUrl(application.applicationId);
     if (config.commentPr) {
-      core.debug("Setting pull request comment...");
+      core.debug('Setting pull request comment...');
       await setPullRequestComment(octokit, {
         appName: application.name,
         appUrl: applicationUrl,
@@ -89,13 +89,13 @@ async function deploy() {
     }
 
     core.info(
-      `🚀 ${application.name} successfully deployed to ${applicationUrl}`
+      `🚀 ${application.name} successfully deployed to ${applicationUrl}`,
     );
   }
 }
 
 async function destroy() {
-  core.info("Destroying application...");
+  core.info('Destroying application...');
 
   const { application } = await getApplication({
     applicationId: config.applicationId,
@@ -104,7 +104,7 @@ async function destroy() {
   });
 
   if (!application) {
-    core.setFailed("Application not found");
+    core.setFailed('Application not found');
     return;
   }
 

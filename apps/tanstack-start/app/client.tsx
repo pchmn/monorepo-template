@@ -1,7 +1,15 @@
-import { StartClient } from '@tanstack/start'
-import { hydrateRoot } from 'react-dom/client'
-import { createRouter } from './router'
+import '@monorepo-template/ui/style.css';
 
-const router = createRouter()
+import { ThemeProvider } from '@monorepo-template/ui/theme-provider.client';
+import { StartClient } from '@tanstack/start';
+import { hydrateRoot } from 'react-dom/client';
+import { createRouter } from './router';
 
-hydrateRoot(document, <StartClient router={router} />)
+const router = createRouter();
+
+hydrateRoot(
+  document,
+  <ThemeProvider>
+    <StartClient router={router} />
+  </ThemeProvider>,
+);

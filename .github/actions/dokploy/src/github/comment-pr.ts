@@ -1,7 +1,7 @@
-import * as core from "@actions/core";
-import * as github from "@actions/github";
+import * as core from '@actions/core';
+import * as github from '@actions/github';
 
-const COMMENT_TAG = "<!-- dokploy-preview-comment -->";
+const COMMENT_TAG = '<!-- dokploy-preview-comment -->';
 
 export async function setPullRequestComment(
   octokit: ReturnType<typeof github.getOctokit>,
@@ -13,7 +13,7 @@ export async function setPullRequestComment(
     appName: string;
     appUrl: string;
     appSettingsUrl: string;
-  }
+  },
 ) {
   try {
     const { owner, repo } = github.context.repo;
@@ -39,7 +39,7 @@ export async function setPullRequestComment(
     core.debug(`Comments: ${JSON.stringify(data, null, 2)}`);
 
     const existingComment = data.find((comment) =>
-      comment.body?.includes(COMMENT_TAG)
+      comment.body?.includes(COMMENT_TAG),
     );
 
     if (!existingComment) {
@@ -49,7 +49,7 @@ export async function setPullRequestComment(
         issue_number,
         body: commentBody,
       });
-      core.info("Comment successfully added");
+      core.info('Comment successfully added');
     } else if (existingComment.body !== commentBody) {
       await octokit.rest.issues.updateComment({
         owner,
@@ -57,7 +57,7 @@ export async function setPullRequestComment(
         comment_id: existingComment.id,
         body: commentBody,
       });
-      core.info("Comment updated");
+      core.info('Comment updated');
     }
   } catch (error) {
     core.error(error.stack);
