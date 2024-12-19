@@ -30,7 +30,7 @@ export interface Application {
   subtitle: string | null;
   command: string | null;
   refreshToken: string;
-  sourceType: "github" | "docker" | "git";
+  sourceType: 'github' | 'docker' | 'git';
   repository: string | null;
   owner: string | null;
   branch: string | null;
@@ -66,7 +66,7 @@ export interface Application {
   labelsSwarm: string | null;
   networkSwarm: string | null;
   replicas: number;
-  applicationStatus: "idle" | "running" | "done" | "error";
+  applicationStatus: 'idle' | 'running' | 'done' | 'error';
   buildType: string;
   publishDirectory: string | null;
   createdAt: string;

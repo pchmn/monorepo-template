@@ -2,7 +2,5 @@
   "name": "@monorepo-template/tsconfig",
   "private": true,
   "version": "0.0.1",
-  "files": [
-    "base.json"
-  ]
+  "files": ["base.json"]
 }

@@ -1,0 +1,44 @@
+{
+  "name": "@monorepo-template/ui",
+  "version": "0.0.1",
+  "private": true,
+  "author": "pchmn",
+  "license": "MIT",
+  "files": ["src/style.css"],
+  "scripts": {
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@monorepo-template/tsconfig": "workspace:*",
+    "@types/node": "^20",
+    "@types/react": "^18.3.12",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.464.0",
+    "postcss": "^8.4.49",
+    "react": "^18.3.1",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss": "^3.4.15",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "peerDependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.464.0",
+    "react": "^18.3.1",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "exports": {
+    "./*": "./src/components/*.tsx",
+    "./theme-provider.client": "./src/providers/theme-provider.client.tsx",
+    "./utils": "./src/lib/utils.ts",
+    "./tailwind.config": "./tailwind.config.ts",
+    "./style.css": "./src/style.css",
+    "./postcss": "./postcss.config.js"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.1.0"
+  }
+}

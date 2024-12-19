@@ -1,4 +1,4 @@
-import * as core from "@actions/core";
+import * as core from '@actions/core';
 import {
   applicationCreate,
   applicationOne,
@@ -6,9 +6,9 @@ import {
   domainCreate,
   projectOne,
   serverPublicIp,
-} from "../sdk/client";
-import type { Application, Domain, Project } from "../sdk/types";
-import { toKebabCase } from "../utils/string";
+} from '../sdk/client';
+import type { Application, Domain, Project } from '../sdk/types';
+import { toKebabCase } from '../utils/string';
 
 export async function getOrCreateApplication({
   applicationId,
@@ -50,8 +50,8 @@ export async function getOrCreateApplication({
         host: domain,
         applicationId: (application as Application).applicationId,
         https: true,
-        certificateType: "letsencrypt",
-        port: Number.parseInt(dockerPort ?? "80"),
+        certificateType: 'letsencrypt',
+        port: Number.parseInt(dockerPort ?? '80'),
       },
     });
     return application as Application;
@@ -108,7 +108,7 @@ export async function getApplication({
 async function generateDomain({
   appName,
   projectName,
-  domain = "sslip.io",
+  domain = 'sslip.io',
 }: {
   appName: string;
   projectName: string;
@@ -116,9 +116,9 @@ async function generateDomain({
 }) {
   const subdomain = toKebabCase(`${projectName}-${appName}`);
 
-  if (domain === "sslip.io") {
+  if (domain === 'sslip.io') {
     const { data: publicIp } = await serverPublicIp();
-    return `${subdomain}.${(publicIp as string).replace(/\./g, "-")}.${domain}`;
+    return `${subdomain}.${(publicIp as string).replace(/\./g, '-')}.${domain}`;
   }
 
   return `${subdomain}.${domain}`;
@@ -130,12 +130,12 @@ export async function waitForDeploymentToBeDone(applicationId: string) {
   });
   const application = res.data as Application | undefined;
   if (!application) {
-    throw new Error("Application not found");
+    throw new Error('Application not found');
   }
-  if (application.applicationStatus === "error") {
-    throw new Error("Application deployment failed");
+  if (application.applicationStatus === 'error') {
+    throw new Error('Application deployment failed');
   }
-  if (application.applicationStatus === "done") {
+  if (application.applicationStatus === 'done') {
     return;
   }
 
